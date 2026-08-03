@@ -54,11 +54,14 @@ public class CompareIanaParagraphs {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         StringBuilder contentBuilder = new StringBuilder();
         String line;
-        while ((line = reader.readLine()) != null) {
-            contentBuilder.append(line).append(" ");
+        try {
+            while ((line = reader.readLine()) != null) {
+                contentBuilder.append(line).append(" ");
+            }
+            return contentBuilder.toString().trim();
+        } finally {
+            reader.close();
         }
-        reader.close();
-        return contentBuilder.toString().trim();
     }
 
     // Compare sentence by sentence
