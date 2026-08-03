@@ -1,5 +1,45 @@
 # AI Fix Notes
 
+Session: seq-1785752788394-vd2cs6pt4
+Repository: Ncorp30/SeleniumTest
+
+## Summary
+
+- Detected actionable issues: 7
+- Issues with proposed PR changes: 4
+- Issues requiring manual review: 3
+- Automated fix mode: partial / safety-first
+
+## Safety Policy
+
+High-priority findings touching security, authentication, credentials, network behavior, dependency safety, privacy, request handling, or response handling are not silently edited by the agent. They are listed for manual review unless the workflow can generate a bounded, low-risk change with enough context.
+
+## Proposed Changes Included in This PR
+
+- [1] (high) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Test code is implemented as a public static main program instead of a proper test class. This bypasses the testing framework, makes execution/reporting inconsistent, and reduces maintainability and automation compatibility.
+- [2] (high) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: WebDriver is instantiated without guaranteed cleanup in a finally block or try-with-resources equivalent. If an exception occurs, the browser session may leak, causing resource exhaustion and flaky test runs.
+- [3] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Launching a real Chrome browser for paragraph comparison is expensive and slow for a test-like task. Consider using a lighter-weight approach, headless mode, or extracting the comparison logic from browser automation to reduce runtime and CI cost.
+- [4] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: The code appears to use hard-coded URL and likely hard-coded XPath/DOM selectors. This makes the automation brittle against minor site changes and reduces long-term stability.
+
+## Manual Review Required
+
+- [1] (low) APIAutomation/src/test/java/com/api/tests/LoginAPITest.java: The test is a placeholder with assertTrue(true), which provides no meaningful coverage or validation. This creates a false sense of test completeness and does not protect against regressions.
+  - Reason: Deferred by automated fix budget (6 issues per run).
+  - Next step: Rerun a focused fix pass or review this issue manually.
+- [2] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Imports include FileReader and BufferedReader, suggesting file I/O may be mixed into browser automation logic. Combining external file handling, scraping, and comparison in one class weakens separation of concerns and testability.
+  - Reason: Deferred by per-file issue budget (4 issues per file).
+  - Next step: Review the remaining findings manually or run another focused fix pass.
+- [3] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: No visible assertion framework or verification structure is used in the shown code. If this is intended to validate content, missing assertions and clear pass/fail conditions will make the automation ineffective as a test.
+  - Reason: Deferred by per-file issue budget (4 issues per file).
+  - Next step: Review the remaining findings manually or run another focused fix pass.
+
+
+---
+
+## Previous AI Fix Notes
+
+# AI Fix Notes
+
 Session: seq-1785751732653-omc6anpty
 Repository: Ncorp30/SeleniumTest
 
