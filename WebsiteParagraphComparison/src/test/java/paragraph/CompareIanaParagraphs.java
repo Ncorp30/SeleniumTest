@@ -1,5 +1,6 @@
 package paragraph;
 
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,14 +10,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 public class CompareIanaParagraphs {
-    public static void main(String[] args) {
+    @Test
+    public void compareParagraphs() {
         // Set path to ChromeDriver if not in system PATH
         // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
         WebDriver driver = null;
 
         try {
+            assumeFalse(Boolean.parseBoolean(System.getenv("SKIP_LIVE_BROWSER_TESTS")));
+
             driver = new ChromeDriver();
 
             // Navigate to the website
