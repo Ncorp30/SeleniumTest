@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,14 +18,19 @@ public class CompareIanaParagraphs {
         WebDriver driver = null;
 
         try {
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+
+            driver = new ChromeDriver(options);
 
             // Navigate to the website
-            String url = "https://www.iana.org/help/example-domains";
+            String url = System.getenv().getOrDefault("IANA_EXAMPLE_DOMAINS_URL", "https://www.iana.org/help/example-domains");
             driver.get(url);
 
             // Locate the paragraph element using XPath
-            WebElement paragraphElement = driver.findElement(By.xpath("//p[contains(text(),'We provide a web service on the example domain hos')]"));
+            WebElement paragraphElement = driver.findElement(By.cssSelector("main p"));
 
             // Get actual paragraph text from the website
             String actualText = paragraphElement.getText().trim();
