@@ -14,9 +14,11 @@ public class CompareIanaParagraphs {
         // Set path to ChromeDriver if not in system PATH
         // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = null;
 
         try {
+            driver = new ChromeDriver();
+
             // Navigate to the website
             String url = "https://www.iana.org/help/example-domains";
             driver.get(url);
@@ -41,7 +43,9 @@ public class CompareIanaParagraphs {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            driver.quit();  // Always close the browser
+            if (driver != null) {
+                driver.quit();  // Always close the browser
+            }
         }
     }
 
