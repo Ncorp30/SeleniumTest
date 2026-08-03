@@ -1,5 +1,6 @@
 package paragraph;
 
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,8 +10,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 public class CompareIanaParagraphs {
-    public static void main(String[] args) {
+    @Test
+    void compareParagraphs() {
         // Set path to ChromeDriver if not in system PATH
         // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
@@ -32,16 +37,14 @@ public class CompareIanaParagraphs {
             // Read expected text from file
             String expectedText = readTextFromFile("expected_paragraphs.txt").trim();
 
+            assertNotNull(actualText);
+            assertNotNull(expectedText);
+
             // Compare paragraphs and highlight differences
-            if (actualText.equals(expectedText)) {
-                System.out.println("✅ Paragraph matches expected text.");
-            } else {
-                System.out.println("❌ Mismatch found:");
-                compareSentences(expectedText, actualText);  // ✅ Use sentence/word-level comparison
-            }
+            assertEquals(expectedText, actualText, "Paragraph text does not match expected text.");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             if (driver != null) {
                 driver.quit();  // Always close the browser
