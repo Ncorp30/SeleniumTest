@@ -10,6 +10,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CompareIanaParagraphs {
+    private static final String URL = "https://www.iana.org/help/example-domains";
+    private static final By PARAGRAPH_LOCATOR = By.xpath("//p[contains(text(),'We provide a web service on the example domain hos')]");
+    private static final String EXPECTED_TEXT_FILE = "expected_paragraphs.txt";
+
     public static void main(String[] args) {
         // Set path to ChromeDriver if not in system PATH
         // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
@@ -20,17 +24,17 @@ public class CompareIanaParagraphs {
             driver = new ChromeDriver();
 
             // Navigate to the website
-            String url = "https://www.iana.org/help/example-domains";
+            String url = URL;
             driver.get(url);
 
             // Locate the paragraph element using XPath
-            WebElement paragraphElement = driver.findElement(By.xpath("//p[contains(text(),'We provide a web service on the example domain hos')]"));
+            WebElement paragraphElement = driver.findElement(PARAGRAPH_LOCATOR);
 
             // Get actual paragraph text from the website
             String actualText = paragraphElement.getText().trim();
 
             // Read expected text from file
-            String expectedText = readTextFromFile("expected_paragraphs.txt").trim();
+            String expectedText = readTextFromFile(EXPECTED_TEXT_FILE).trim();
 
             // Compare paragraphs and highlight differences
             if (actualText.equals(expectedText)) {
