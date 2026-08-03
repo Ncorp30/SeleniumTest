@@ -2,12 +2,12 @@ package com.api.tests;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class LoginAPITest {
 
     @Test
     void loginTestPlaceholder() {
-        assertTrue(true);
+        fail("Login test not implemented yet.");
     }
 }
