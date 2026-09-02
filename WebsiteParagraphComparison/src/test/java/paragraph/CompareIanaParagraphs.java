@@ -1,5 +1,8 @@
 package paragraph;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,17 +13,26 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CompareIanaParagraphs {
-    public static void main(String[] args) {
+    private WebDriver driver;
+
+    @AfterEach
+    void tearDown() {
+        if (driver != null) {
+            driver.quit();  // Always close the browser
+            driver = null;
+        }
+    }
+
+    @Test
+    void compareParagraphs() throws IOException {
         // Set path to ChromeDriver if not in system PATH
         // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-
-        WebDriver driver = null;
 
         try {
             driver = new ChromeDriver();
 
             // Navigate to the website
-            String url = "https://www.iana.org/help/example-domains";
+            String url = "file:src/test/resources/example-domains.html";
             driver.get(url);
 
             // Locate the paragraph element using XPath
@@ -34,18 +46,14 @@ public class CompareIanaParagraphs {
 
             // Compare paragraphs and highlight differences
             if (actualText.equals(expectedText)) {
-                System.out.println("✅ Paragraph matches expected text.");
+                Assertions.assertEquals(expectedText, actualText);
             } else {
-                System.out.println("❌ Mismatch found:");
                 compareSentences(expectedText, actualText);  // ✅ Use sentence/word-level comparison
+                Assertions.assertEquals(expectedText, actualText);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (driver != null) {
-                driver.quit();  // Always close the browser
-            }
+            throw e;
         }
     }
 
