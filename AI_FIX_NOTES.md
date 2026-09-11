@@ -1,5 +1,48 @@
 # AI Fix Notes
 
+Session: seq-1789108689460-ex6y02xfr
+Repository: Ncorp30/SeleniumTest
+
+## Summary
+
+- Detected actionable issues: 6
+- Issues with proposed PR changes: 1
+- Issues requiring manual review: 5
+- Automated fix mode: partial / safety-first
+
+## Safety Policy
+
+High-priority findings touching security, authentication, credentials, network behavior, dependency safety, privacy, request handling, or response handling are not silently edited by the agent. They are listed for manual review unless the workflow can generate a bounded, low-risk change with enough context.
+
+## Proposed Changes Included in This PR
+
+- [1] (medium) APIAutomation/src/test/java/com/api/tests/LoginAPITest.java: The test is a placeholder (`assertTrue(true)`) and does not validate any behavior. This provides false confidence and no regression protection. Replace it with assertions against actual API responses, status codes, and payload validation.
+
+## Manual Review Required
+
+- [1] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Hard-coded URL and inline comments indicate limited configurability. Extract constants and encapsulate page interaction logic into helper methods/pages to improve readability and reuse.
+  - Reason: Deferred by per-file issue budget (4 issues per file).
+  - Next step: Review the remaining findings manually or run another focused fix pass.
+- [2] (high) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Test/code sample appears to be a standalone `main` program inside a test source tree rather than a JUnit test. This makes it harder to run, report, and maintain as part of CI. Convert it to a proper test class with `@Test` methods and assertions.
+  - Reason: The AI did not generate a meaningful source-file change for this issue.
+  - Next step: Review the finding manually or rerun a focused fix pass with more context.
+- [3] (high) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: WebDriver lifecycle is not shown to be safely closed. If `driver.quit()` is missing in the omitted code, the test can leak browser processes and destabilize CI runs. Use `try/finally` or `try-with-resources`-style management where applicable.
+  - Reason: The AI did not generate a meaningful source-file change for this issue.
+  - Next step: Review the finding manually or rerun a focused fix pass with more context.
+- [4] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: Launching a real Chrome browser for paragraph comparison is expensive and slow for a test suite. If this is a content-validation test, prefer lighter-weight parsing/HTTP-based checks unless browser rendering is specifically required.
+  - Reason: The AI did not generate a meaningful source-file change for this issue.
+  - Next step: Review the finding manually or rerun a focused fix pass with more context.
+- [5] (medium) WebsiteParagraphComparison/src/test/java/paragraph/CompareIanaParagraphs.java: The code loads a remote website directly during test execution. This introduces external dependency risk, flaky tests, and potential exposure to unpredictable page content. Prefer mocking, local fixtures, or pinned test pages for deterministic validation.
+  - Reason: The AI did not generate a meaningful source-file change for this issue.
+  - Next step: Review the finding manually or rerun a focused fix pass with more context.
+
+
+---
+
+## Previous AI Fix Notes
+
+# AI Fix Notes
+
 Session: seq-1785751732653-omc6anpty
 Repository: Ncorp30/SeleniumTest
 
